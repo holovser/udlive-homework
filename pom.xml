@@ -13,7 +13,7 @@
 	<url>https://udlive.io</url>
 
 	<properties>
-		<flink.version>1.16.0</flink.version>
+		<flink.version>1.19.0</flink.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -44,14 +44,14 @@
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-clients</artifactId>
 			<version>${flink.version}</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-table</artifactId>
 			<version>${flink.version}</version>
 			<type>pom</type>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.flink</groupId>
@@ -62,14 +62,14 @@
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-table-api-java-bridge</artifactId>
 			<version>${flink.version}</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-azure-fs-hadoop -->
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-azure-fs-hadoop</artifactId>
 			<version>1.15.2</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 
 		<!-- Add logging framework, to produce console output when running in the IDE. -->
@@ -102,13 +102,15 @@
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-table-planner_2.12</artifactId>
 			<version>${flink.version}</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka -->
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-connector-kafka</artifactId>
-			<version>${flink.version}</version>
+			<version>3.1.0-1.18</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
@@ -142,6 +144,43 @@
 			<artifactId>lettuce-core</artifactId>
 			<version>6.2.0.RELEASE</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-files -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-files</artifactId>
+			<version>1.19.0</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-json</artifactId>
+			<version>1.19.0</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-streaming-scala_2.12</artifactId>
+			<version>1.19.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.flink</groupId>-->
+<!--			<artifactId>flink-clients_2.11</artifactId>-->
+<!--			<version>1.19.0</version>-->
+<!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.flink</groupId>-->
+<!--			<artifactId>flink-clients</artifactId>-->
+<!--			<version>1.19.0</version>-->
+<!--		</dependency>-->
+
 	</dependencies>
 
 	<build>
@@ -219,7 +258,7 @@
 							</filters>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.udlive.flinktest.SimpleOutput</mainClass>
+									<mainClass>com.udlive.flinktest.SimpleStatistics</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>

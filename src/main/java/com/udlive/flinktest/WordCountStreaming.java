@@ -17,9 +17,7 @@ public class WordCountStreaming{
 
         // set up the execution environment
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-    
-      
-        
+
         // get input data
         DataStream<String> source = env.fromElements(
                 "To be, or not to be,--that is the question:--",

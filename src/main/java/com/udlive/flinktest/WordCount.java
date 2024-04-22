@@ -10,7 +10,7 @@ public class WordCount{
     public static void main( String[] args ) throws Exception{
 
         // set up the execution environment
-        final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+//        final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 
         // input data
         // you can also use env.readTextFile(...) to get words
