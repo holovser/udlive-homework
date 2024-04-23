@@ -6,7 +6,7 @@ This project is a simple Java program which can be built with maven and executed
 I highly recommend using Amazon Corretto jdk to buid and run this program as I experienced some issues which deserialisation and Jackson library and running with different JDK might require to change the code or update dependencies.
 You can simply run the jar files provided with a jdk, each files represents a Flink job. Unfortunately JAR files 
 got too big to be stored on github so I'm attaching a link to Google Drive: 
-[Google Drive]([https://pages.github.com/](https://drive.google.com/drive/folders/19X5XXcnd9xZbVjrxi5DCjbznonERihdC?usp=sharing))
+[Google Drive](https://drive.google.com/drive/folders/19X5XXcnd9xZbVjrxi5DCjbznonERihdC?usp=sharing)
 It should be also extremely easy to run any job from Intellij IDE.
 
 ## Challenges encountered
