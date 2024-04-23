@@ -1,13 +1,20 @@
 package com.udlive.flinktest.statistics;
 
 import com.udlive.flinktest.model.Telemetry;
-import com.udlive.flinktest.statistics.daily.DailySummaryAccumulator;
-import com.udlive.flinktest.statistics.daily.DailySummaryAggregator;
-import com.udlive.flinktest.statistics.simple.SummaryAccumulator;
+import org.apache.flink.api.common.functions.AggregateFunction;
 
-public abstract class Aggregator {
+import java.time.Instant;
+import java.time.ZoneId;
 
-    public Accumulator add(Telemetry telemetry, Accumulator summaryAccumulator) {
+
+public class SummaryAggregator implements AggregateFunction<Telemetry, SummaryAccumulator, SummaryAccumulator> {
+    @Override
+    public SummaryAccumulator createAccumulator() {
+        return new SummaryAccumulator();
+    }
+
+    @Override
+    public SummaryAccumulator add(Telemetry telemetry, SummaryAccumulator summaryAccumulator) {
         summaryAccumulator.allCount++;
 
         if (telemetry.getDistanceToWater() != null) {
@@ -34,10 +41,15 @@ public abstract class Aggregator {
             summaryAccumulator.rebootCounts++;
         }
 
+        summaryAccumulator.date = Instant.ofEpochSecond(telemetry.getEpochTimestamp())
+                .atZone(ZoneId.of("UTC"))
+                .toLocalDate();
+
         return summaryAccumulator;
     }
 
-    public Accumulator getResult(Accumulator summaryAccumulator) {
+    @Override
+    public SummaryAccumulator getResult(SummaryAccumulator summaryAccumulator) {
         summaryAccumulator.averageBatteryVoltage = Double.valueOf(summaryAccumulator.sumBatteryVoltage) / summaryAccumulator.allCount;
         summaryAccumulator.averageSignalStrength = Double.valueOf(summaryAccumulator.sumSignalStrength) / summaryAccumulator.allCount;
 
@@ -46,8 +58,9 @@ public abstract class Aggregator {
         return summaryAccumulator;
     }
 
-    public Accumulator merge(Accumulator acc1, Accumulator acc2) {
-        Accumulator res = new Accumulator();
+    @Override
+    public SummaryAccumulator merge(SummaryAccumulator acc1, SummaryAccumulator acc2) {
+        SummaryAccumulator res = new SummaryAccumulator();
 
         res.distanceCount = acc1.distanceCount + acc2.distanceCount;
         res.allCount = acc1.allCount + acc2.allCount;

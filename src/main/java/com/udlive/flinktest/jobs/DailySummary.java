@@ -1,10 +1,12 @@
-package com.udlive.flinktest;
+package com.udlive.flinktest.jobs;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.udlive.flinktest.model.Telemetry;
-import com.udlive.flinktest.statistics.simple.SummaryAccumulator;
-import com.udlive.flinktest.statistics.simple.SummaryAggregator;
+import com.udlive.flinktest.statistics.SummaryAccumulator;
+import com.udlive.flinktest.statistics.SummaryAggregator;
+import com.udlive.flinktest.streaming.TelemetryStreamController;
+import com.udlive.flinktest.utils.FilePathUtils;
 import com.udlive.flinktest.utils.TelemetryUtils;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
@@ -21,35 +23,18 @@ import java.time.Duration;
 
 public class DailySummary {
 
-    static final String telemetryPath = "/Users/serhiiholovko/Downloads/flink_homework/flink_homework/resources/telemetry.dat";
-
     public static void main(String[] args) throws Exception {
+        TelemetryStreamController streamController = new TelemetryStreamController();
 
-        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setRuntimeMode(RuntimeExecutionMode.BATCH);
-
-        final FileSource<String> source =
-                FileSource.forRecordStreamFormat(new TextLineInputFormat(), new Path(telemetryPath))
-                        .build();
-
-        DataStreamSource<String> stream =
-                env.fromSource(source, WatermarkStrategy.noWatermarks(), "telemetry-file-source");
-
-        SingleOutputStreamOperator<Telemetry> parsedStream = stream.map(jsonString -> {
-            ObjectMapper objectMapper =
-                    new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            return objectMapper.readValue(jsonString, Telemetry.class);
-        });
-
+        DataStream<Telemetry> parsedStream = streamController.createParsedStream();
 
         DataStream<SummaryAccumulator> summaryStream = parsedStream
                 .keyBy(TelemetryUtils::getKeyFromDate)
                 .window(TumblingProcessingTimeWindows.of(Duration.ofDays(1)))
                 .aggregate(new SummaryAggregator());
 
-
         summaryStream.print();
-        env.execute("Daily Summary Job");
 
+        streamController.startProcessing("Daily Summary Job");
     }
 }

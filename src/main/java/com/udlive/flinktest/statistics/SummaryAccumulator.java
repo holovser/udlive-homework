@@ -1,4 +1,4 @@
-package com.udlive.flinktest.statistics.simple;
+package com.udlive.flinktest.statistics;
 
 import java.time.LocalDate;
 
@@ -32,7 +32,8 @@ public class SummaryAccumulator {
     @Override
     public String toString() {
         return "SummaryAccumulator{" +
-                "rebootCounts=" + rebootCounts +
+                " date=" + date +
+                ", rebootCounts=" + rebootCounts +
                 ", minDistance=" + minDistance +
                 ", maxDistance=" + maxDistance +
                 ", averageDistance=" + averageDistance +

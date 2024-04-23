@@ -88,7 +88,6 @@ public class Telemetry {
                 ", signalStrength=" + signalStrength +
                 ", batteryVoltage=" + batteryVoltage +
                 ", distanceToWater=" + distanceToWater +
-                ", epochTimestamp=" + epochTimestamp +
                 '}';
     }
 

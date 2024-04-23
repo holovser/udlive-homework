@@ -1,10 +1,9 @@
-package com.udlive.flinktest;
+package com.udlive.flinktest.streaming;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.udlive.flinktest.model.Telemetry;
-import com.udlive.flinktest.statistics.simple.SummaryAccumulator;
-import com.udlive.flinktest.statistics.simple.SummaryAggregator;
+import com.udlive.flinktest.utils.FilePathUtils;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.connector.file.src.FileSource;
@@ -14,25 +13,23 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 
-import java.time.Duration;
+public class TelemetryStreamController {
 
-public class SimpleStatistics {
+    private final StreamExecutionEnvironment env;
 
-    static final String telemetryPath = "/Users/serhiiholovko/Downloads/flink_homework/flink_homework/resources/telemetry.dat";
-
-
-    public static void main(String[] args) throws Exception {
-//        System.out.println("Type absolute path to telemetry.dat");
-//        Scanner myObj = new Scanner(System.in);
-//        String path = myObj.nextLine();
-
-        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+    public TelemetryStreamController() {
+        env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.BATCH);
+    }
 
+    public TelemetryStreamController(StreamExecutionEnvironment env) {
+        this.env = env;
+    }
+
+    public DataStream<Telemetry> createParsedStream() {
         final FileSource<String> source =
-                FileSource.forRecordStreamFormat(new TextLineInputFormat(), new Path(telemetryPath))
+                FileSource.forRecordStreamFormat(new TextLineInputFormat(), new Path(FilePathUtils.getFilePathFromConsole()))
                         .build();
 
         DataStreamSource<String> stream =
@@ -45,15 +42,12 @@ public class SimpleStatistics {
         });
 
 
-        DataStream<SummaryAccumulator> summaryStream = parsedStream
-                // Not sure keyBy is needed here
-                .keyBy(value -> value)
-                .windowAll(TumblingProcessingTimeWindows.of(Duration.ofSeconds(1)))
-                .aggregate(new SummaryAggregator());
-
-
-        summaryStream.print();
-        env.execute("Global Summary Job");
-
+        return parsedStream;
     }
+
+    public void startProcessing(String jobName) throws Exception {
+        env.execute(jobName);
+    }
+
+
 }
