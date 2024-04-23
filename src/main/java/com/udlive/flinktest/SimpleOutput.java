@@ -28,6 +28,6 @@ public class SimpleOutput {
                 env.fromSource(source, WatermarkStrategy.noWatermarks(), "telemetry-file-source");
 
         stream.print().name("print-sink");
-        env.execute("Test streaming");
+        env.execute("Simple Output Job");
     }
 }

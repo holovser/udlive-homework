@@ -3,13 +3,10 @@ package com.udlive.flinktest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.udlive.flinktest.model.Telemetry;
-import com.udlive.flinktest.statistics.SummaryAccumulator;
-import com.udlive.flinktest.statistics.SummaryAggregator;
-import com.udlive.flinktest.statistics.average.AvgDistanceToWaterAggregator;
-import org.apache.flink.api.common.JobExecutionResult;
+import com.udlive.flinktest.statistics.simple.SummaryAccumulator;
+import com.udlive.flinktest.statistics.simple.SummaryAggregator;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
-import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.connector.file.src.FileSource;
 import org.apache.flink.connector.file.src.reader.TextLineInputFormat;
 import org.apache.flink.core.fs.Path;
@@ -17,10 +14,7 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
-import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
-import org.apache.flink.util.Collector;
 
 import java.time.Duration;
 
@@ -52,13 +46,14 @@ public class SimpleStatistics {
 
 
         DataStream<SummaryAccumulator> summaryStream = parsedStream
+                // Not sure keyBy is needed here
                 .keyBy(value -> value)
                 .windowAll(TumblingProcessingTimeWindows.of(Duration.ofSeconds(1)))
-                        .aggregate(new SummaryAggregator());
+                .aggregate(new SummaryAggregator());
 
 
         summaryStream.print();
-        env.execute("Event Count Job");
+        env.execute("Global Summary Job");
 
     }
 }

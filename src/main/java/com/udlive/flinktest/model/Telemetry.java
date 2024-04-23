@@ -1,6 +1,8 @@
 package com.udlive.flinktest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+import java.util.Map;
 
 public class Telemetry {
 
@@ -16,12 +18,22 @@ public class Telemetry {
     @JsonProperty("batV")
     private Integer batteryVoltage;
 
-    @JsonProperty("rx0")
-    private MetaData metaData;
+    @JsonProperty("timestamp_utc")
+    private Integer epochTimestamp;
 
-    public MetaData getMetaData() {
-        return metaData;
+    private Double distanceToWater;
+
+    @JsonProperty("rx0")
+    private void unpackNameFromNestedObject(Map<String, Object> metadata) {
+        if (metadata.get("dist_mm") instanceof List) {
+            List<Double> distanceToWaterList = (List<Double>) metadata.get("dist_mm");
+
+            if (distanceToWaterList != null && !distanceToWaterList.isEmpty()) {
+                distanceToWater = distanceToWaterList.get(0);
+            }
+        }
     }
+
 
     public String getDeviceId() {
         return deviceId;
@@ -55,8 +67,17 @@ public class Telemetry {
         this.batteryVoltage = batteryVoltage;
     }
 
-    public void setMetaData(MetaData metaData) {
-        this.metaData = metaData;
+    public Double getDistanceToWater() {
+        return distanceToWater;
+    }
+
+
+    public Integer getEpochTimestamp() {
+        return epochTimestamp;
+    }
+
+    public void setEpochTimestamp(Integer epochTimestamp) {
+        this.epochTimestamp = epochTimestamp;
     }
 
     @Override
@@ -66,6 +87,8 @@ public class Telemetry {
                 ", uptime=" + uptime +
                 ", signalStrength=" + signalStrength +
                 ", batteryVoltage=" + batteryVoltage +
+                ", distanceToWater=" + distanceToWater +
+                ", epochTimestamp=" + epochTimestamp +
                 '}';
     }
 

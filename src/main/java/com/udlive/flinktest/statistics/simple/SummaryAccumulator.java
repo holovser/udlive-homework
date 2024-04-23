@@ -1,8 +1,10 @@
-package com.udlive.flinktest.statistics;
+package com.udlive.flinktest.statistics.simple;
 
-import java.util.Optional;
+import java.time.LocalDate;
 
 public class SummaryAccumulator {
+
+    public LocalDate date;
 
     public Integer distanceCount = 0;
     public Integer allCount = 0;
