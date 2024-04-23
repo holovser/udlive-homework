@@ -1,4 +1,4 @@
-package com.udlive.flinktest.utils;
+package com.udlive.flink.utils;
 
 import java.util.Scanner;
 

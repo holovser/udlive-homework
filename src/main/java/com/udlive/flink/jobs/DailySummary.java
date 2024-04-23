@@ -1,10 +1,10 @@
-package com.udlive.flinktest.jobs;
+package com.udlive.flink.jobs;
 
-import com.udlive.flinktest.model.Telemetry;
-import com.udlive.flinktest.statistics.SummaryAccumulator;
-import com.udlive.flinktest.statistics.SummaryAggregator;
-import com.udlive.flinktest.streaming.TelemetryStreamController;
-import com.udlive.flinktest.utils.TelemetryUtils;
+import com.udlive.flink.model.Telemetry;
+import com.udlive.flink.statistics.SummaryAccumulator;
+import com.udlive.flink.statistics.SummaryAggregator;
+import com.udlive.flink.streaming.TelemetryStreamController;
+import com.udlive.flink.utils.TelemetryUtils;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;

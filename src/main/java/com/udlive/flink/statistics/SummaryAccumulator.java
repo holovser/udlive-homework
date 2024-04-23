@@ -1,4 +1,4 @@
-package com.udlive.flinktest.statistics;
+package com.udlive.flink.statistics;
 
 import java.time.LocalDate;
 

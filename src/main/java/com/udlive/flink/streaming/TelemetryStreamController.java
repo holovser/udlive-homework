@@ -1,9 +1,9 @@
-package com.udlive.flinktest.streaming;
+package com.udlive.flink.streaming;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.udlive.flinktest.model.Telemetry;
-import com.udlive.flinktest.utils.FilePathUtils;
+import com.udlive.flink.model.Telemetry;
+import com.udlive.flink.utils.FilePathUtils;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.connector.file.src.FileSource;

@@ -1,4 +1,4 @@
-package com.udlive.flinktest.model;
+package com.udlive.flink.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.udlive.flinktest.statistics;
+package com.udlive.flink.statistics;
 
-import com.udlive.flinktest.model.Telemetry;
+import com.udlive.flink.model.Telemetry;
 import org.apache.flink.api.common.functions.AggregateFunction;
 
 import java.time.Instant;

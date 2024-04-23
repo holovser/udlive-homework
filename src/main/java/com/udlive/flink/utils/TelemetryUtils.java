@@ -1,6 +1,6 @@
-package com.udlive.flinktest.utils;
+package com.udlive.flink.utils;
 
-import com.udlive.flinktest.model.Telemetry;
+import com.udlive.flink.model.Telemetry;
 
 import java.time.Instant;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.udlive.flinktest;
+package com.udlive.flink;
 
 import static org.junit.Assert.assertTrue;
 

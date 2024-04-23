@@ -1,7 +1,7 @@
-package com.udlive.flinktest.jobs;
+package com.udlive.flink.jobs;
 
 
-import com.udlive.flinktest.utils.FilePathUtils;
+import com.udlive.flink.utils.FilePathUtils;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.connector.file.src.FileSource;
 import org.apache.flink.connector.file.src.reader.TextLineInputFormat;
