@@ -19,7 +19,7 @@ public class Telemetry {
     private Integer batteryVoltage;
 
     @JsonProperty("timestamp_utc")
-    private Integer epochTimestamp;
+    private Long epochTimestampSeconds;
 
     private Double distanceToWater;
 
@@ -72,12 +72,12 @@ public class Telemetry {
     }
 
 
-    public Integer getEpochTimestamp() {
-        return epochTimestamp;
+    public Long getEpochEpochTimestampSeconds() {
+        return epochTimestampSeconds;
     }
 
-    public void setEpochTimestamp(Integer epochTimestamp) {
-        this.epochTimestamp = epochTimestamp;
+    public void setEpochTimestampSeconds(Long epochTimestamp) {
+        this.epochTimestampSeconds = epochTimestamp;
     }
 
     @Override

@@ -41,7 +41,7 @@ public class SummaryAggregator implements AggregateFunction<Telemetry, SummaryAc
             summaryAccumulator.rebootCounts++;
         }
 
-        summaryAccumulator.date = Instant.ofEpochSecond(telemetry.getEpochTimestamp())
+        summaryAccumulator.date = Instant.ofEpochSecond(telemetry.getEpochEpochTimestampSeconds())
                 .atZone(ZoneId.of("UTC"))
                 .toLocalDate();
 

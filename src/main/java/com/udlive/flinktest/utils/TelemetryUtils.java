@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 public class TelemetryUtils {
-    public static Integer getKeyFromDate(Telemetry telemetry) {
-        Integer timestamp = telemetry.getEpochTimestamp();
+    public static Integer getTimeStampFromTelemetry(Telemetry telemetry) {
+        Long timestamp = telemetry.getEpochEpochTimestampSeconds();
 
         LocalDate localDate = Instant.ofEpochSecond(timestamp)
                 .atZone(ZoneId.of("UTC"))
